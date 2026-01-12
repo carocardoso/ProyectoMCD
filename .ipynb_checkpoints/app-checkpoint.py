@@ -1,11 +1,11 @@
-
 import streamlit as st
-import pandas as pd
-import numpy
+
+from app.info_proyecto import mostrar_info_proyecto
+
 
 # from app.datos_gral import mostrar_datos_gral
 # from app.dashboard_proceso import mostrar_procesados
-# from app.info_proyecto import mostrar_info_proyecto
+# 
 # from app.carreras_sel import mostrar_carreras_sel
 
 from streamlit_option_menu import option_menu
@@ -25,9 +25,8 @@ with st.sidebar:
         icons=["info-circle", "funnel", "bar-chart", "graph-up-arrow"])   
 
 if seccion == "Información del Proyecto":
-    #mostrar_info_proyecto()
-    st.write('info proy')
-    st.write('más inform para borrar')
+    mostrar_info_proyecto()
+
 
 elif seccion == "Estadísticas":
      #mostrar_datos_gral() #mostrar_datos2()
