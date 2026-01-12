@@ -27,6 +27,7 @@ with st.sidebar:
 if seccion == "Información del Proyecto":
     #mostrar_info_proyecto()
     st.write('info proy')
+    st.write('más inform para borrar')
 
 elif seccion == "Estadísticas":
      #mostrar_datos_gral() #mostrar_datos2()
