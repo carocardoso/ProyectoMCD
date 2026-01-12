@@ -1,12 +1,2 @@
 streamlit
 pandas
-plotly
-wordcloud
-request
-pypdf
-translate
-langdetect
-seaborn
-nltk
-ollama
-langchain-ollama
