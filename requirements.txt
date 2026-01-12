@@ -1,0 +1,15 @@
+streamlit
+pandas
+plotly
+wordcloud
+matplotlib
+numpy
+bertopic
+request
+pypdf
+translate
+langdetect
+seaborn
+nltk
+ollama
+langchain-ollama
