@@ -2,9 +2,14 @@ import streamlit as st
 import streamlit_shadcn_ui as ui
 import pandas as pd
 import plotly.express as px
+from pathlib import Path
 
 def cargar_datos():
-    df = pd.read_csv("datos\\datos_seleccionados.csv", encoding='latin1', sep=";")
+    base_path = Path(__file__).resolve().parent.parent
+    ruta = base_path / "datos" / "datos_seleccionados.csv"
+    df = pd.read_csv(ruta, encoding="latin1", sep=";")
+    
+   #df = pd.read_csv("datos\\datos_seleccionados.csv", encoding='latin1', sep=";")
     return df
     
 def mostrar_datos_gral():
