@@ -1,0 +1,319 @@
+{
+  "topic_representations": {
+    "0": [
+      [
+        "redes sociales",
+        0.02320569203330022
+      ],
+      [
+        "comunicaci\u00f3n",
+        0.020799965199527284
+      ],
+      [
+        "trabajo",
+        0.01739918636288882
+      ],
+      [
+        "periodismo",
+        0.015500702652993834
+      ],
+      [
+        "sociedad",
+        0.013475412154318394
+      ],
+      [
+        "medios comunicaci\u00f3n",
+        0.012386545976926662
+      ],
+      [
+        "periodistas",
+        0.011580336224777341
+      ],
+      [
+        "cobertura",
+        0.010860207812056977
+      ],
+      [
+        "provincia",
+        0.010822341055519887
+      ],
+      [
+        "juicio",
+        0.00952147998122378
+      ]
+    ],
+    "1": [
+      [
+        "comunicaci\u00f3n",
+        0.026513169617113436
+      ],
+      [
+        "investigaci\u00f3n",
+        0.02167823000704728
+      ],
+      [
+        "p\u00fablico",
+        0.013431023282001684
+      ],
+      [
+        "cambios",
+        0.012551422816684999
+      ],
+      [
+        "ciudad salta",
+        0.012058529129324978
+      ],
+      [
+        "canciones",
+        0.009791547130530093
+      ],
+      [
+        "identidad",
+        0.009535368595431654
+      ],
+      [
+        "estrategias",
+        0.009289307528975482
+      ],
+      [
+        "social",
+        0.008892547284676092
+      ],
+      [
+        "videojuegos",
+        0.008584552119255736
+      ]
+    ],
+    "2": [
+      [
+        "influencers",
+        0.026869121951594327
+      ],
+      [
+        "redes sociales",
+        0.025932634213183543
+      ],
+      [
+        "estrategias",
+        0.024179179664748342
+      ],
+      [
+        "instagram",
+        0.023486857447067844
+      ],
+      [
+        "mercado",
+        0.016534844277904203
+      ],
+      [
+        "usuarios",
+        0.01614912955166573
+      ],
+      [
+        "branding",
+        0.015929038341021093
+      ],
+      [
+        "blogs",
+        0.013965480431764566
+      ],
+      [
+        "mujeres",
+        0.01338322411746998
+      ],
+      [
+        "red social",
+        0.01293174471612178
+      ]
+    ],
+    "3": [
+      [
+        "an\u00e1lisis",
+        0.016411630972956916
+      ],
+      [
+        "trabajo",
+        0.015722985096551425
+      ],
+      [
+        "estrategias",
+        0.015200045120772764
+      ],
+      [
+        "institucional",
+        0.0106582392923596
+      ],
+      [
+        "ciudad salta",
+        0.010118619426175144
+      ],
+      [
+        "campa\u00f1a",
+        0.009827956092341003
+      ],
+      [
+        "estrategias comunicaci\u00f3n",
+        0.00979531319508885
+      ],
+      [
+        "salud",
+        0.009747212011677067
+      ],
+      [
+        "social",
+        0.00829107032300414
+      ],
+      [
+        "alumnos",
+        0.008155904884411432
+      ]
+    ]
+  },
+  "topics": [
+    2,
+    3,
+    3,
+    3,
+    1,
+    2,
+    1,
+    3,
+    1,
+    3,
+    2,
+    0,
+    3,
+    1,
+    1,
+    2,
+    1,
+    2,
+    0,
+    2,
+    3,
+    0,
+    3,
+    3,
+    1,
+    2,
+    0,
+    0,
+    3,
+    0,
+    2,
+    0,
+    3,
+    1,
+    3,
+    3,
+    1,
+    3,
+    0,
+    0,
+    0,
+    1,
+    3,
+    0,
+    3,
+    2,
+    3,
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    1,
+    3,
+    0,
+    3,
+    2,
+    0,
+    1,
+    0,
+    0,
+    2,
+    0,
+    1,
+    3,
+    3,
+    2,
+    3,
+    0,
+    1,
+    3,
+    2,
+    3,
+    3,
+    1,
+    2,
+    3,
+    3,
+    3,
+    3,
+    0,
+    2,
+    3,
+    0,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0,
+    1,
+    1,
+    1,
+    3,
+    3,
+    1,
+    3,
+    3,
+    3,
+    3,
+    1
+  ],
+  "topic_sizes": {
+    "2": 15,
+    "3": 46,
+    "1": 22,
+    "0": 20
+  },
+  "topic_mapper": [
+    [
+      -1,
+      -1
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      3,
+      3
+    ]
+  ],
+  "topic_labels": {
+    "0": "0_redes sociales_comunicaci\u00f3n_trabajo_periodismo",
+    "1": "1_comunicaci\u00f3n_investigaci\u00f3n_p\u00fablico_cambios",
+    "2": "2_influencers_redes sociales_estrategias_instagram",
+    "3": "3_an\u00e1lisis_trabajo_estrategias_institucional"
+  },
+  "custom_labels": [
+    "Comunicaci\u00f3n Social: Periodismo y Participaci\u00f3n Ciudadana en Redes",
+    "Comunicaci\u00f3n Social: Identidad y Estrategias en Contextos Urbanos",
+    "Estrategias de Influencia Digital: Emprendimientos Femeninos en Redes Sociales",
+    "Comunicaci\u00f3n Estrat\u00e9gica: Gesti\u00f3n Institucional y Social en Salta"
+  ],
+  "_outliers": 0,
+  "topic_aspects": {}
+}
