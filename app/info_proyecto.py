@@ -3,8 +3,8 @@ import streamlit as st
 def mostrar_info_proyecto():
     st.title("ℹ️ Información del Proyecto")
     st.markdown("""
-    Esta aplicación muestra el desarrollo del proyecto de análisis de trabajos finales de carreras de grado de la Universidad Católica de Salta.
-    Este proyecto forma parte de la tesis de maestría y tiene como propósito analizar tendencias en los trabajos finales de distintas carreras universitarias.
+    Esta aplicación muestra el desarrollo del proyecto de análisis de trabajos finales de carreras de grado de una Universidad Argentina, aplicando técnicas      de modelado de tópicos.
+    Este proyecto forma parte de la tesis de maestría y tiene como propósito analizar tendencias en los trabajos finales de algunas carreras universitarias.
     << completar>>
     """)
     

@@ -1,26 +1,17 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import os
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
 import zipfile
 from pathlib import Path
+import os
 
 # -----------------------------------------------------------
 # Cargar archivos
 # -----------------------------------------------------------
 def cargar_datos():
-    #path = os.getcwd()
-    #path_datos = os.path.join(path, "datos")
-
     base_path = Path(__file__).resolve().parent.parent
-    #ruta = base_path / "datos" / "datos_seleccionados.csv"
-#    df = pd.read_csv(ruta, encoding="latin1", sep=";")
-
-    # TOPIC_DOCS_CSV = os.path.join(path_datos, "topic_docs.csv")
-    # TOPIC_FREQ_CSV = os.path.join(path_datos, "topic_freq.csv")
-    # DOCS_CSV = os.path.join(path_datos, "datos_carr_sel_prepro.csv")
 
     TOPIC_DOCS_CSV = base_path / "datos" / "topic_docs.csv"
     TOPIC_FREQ_CSV = base_path / "datos" / "topic_freq.csv"
@@ -42,20 +33,15 @@ def cargar_datos():
 # Cargar modelo BERTopic
 # -----------------------------------------------------------
 def cargar_modelo(carrera):
-   # path = os.getcwd()
-   # path_modelos = os.path.join(path, "modelos")
     base_path = Path(__file__).resolve().parent.parent
-  #  ruta = base_path / "datos" / "datos_seleccionados.csv"
 
     carrera_modelo = "model_"+carrera.replace(" ", "_")
-    #carrera_modelo = "model_Licenciatura_en_Psicología"   # Línea que vos usaste para pruebas
 
     model_path = base_path / "modelos" / carrera_modelo  #os.path.join(path_modelos, carrera_modelo)
     print("MODELO:", model_path)
 
     carrera_zip = carrera_modelo + ".zip" 
     zip_path =  base_path / "modelos" / carrera_zip  # os.path.join(path_modelos, carrera_modelo + ".zip")
-
     
     # Verificar si la carpeta del modelo existe
     if not os.path.exists(model_path):
@@ -121,8 +107,9 @@ def mostrar_procesados():
         color="count",
         title=f"Tópicos más frecuentes en {carrera_sel}"
     )
-    st.plotly_chart(fig_bar, use_container_width=True)
-
+    #st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar, width='stretch')
+    
     # ------------------------------
     # Cargar modelo
     # ------------------------------
@@ -157,12 +144,12 @@ def mostrar_procesados():
         top_n_topics=len(all_topics),
         n_words=5
     )
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, width='stretch') # use_container_width=True)
 
     if (len(all_topics) - 1) > 2:
         st.write("Distribución entre tópicos")
         fig2 = modelo.visualize_topics()
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, width='stretch')  #use_container_width=True)
 
     # ----------------------------------------------------
     # 🔥 Evolución de tópicos en el tiempo
@@ -185,31 +172,31 @@ def mostrar_procesados():
     docs_list = docs_filtrado["texto_limpio"].tolist()
     timestamps = docs_filtrado["anio"].tolist()
     
-    print("Len docs_list:", len(docs_list))
-    print("Len timestamps:", len(timestamps))
+    #print("Len docs_list:", len(docs_list))
+    #print("Len timestamps:", len(timestamps))
     
     # Los topics EXACTOS que BERTopic asignó a estos documentos
     pred_topics, _ = modelo.transform(docs_list)
-    print("Len pred_topics:", len(pred_topics))
+    #print("Len pred_topics:", len(pred_topics))
     
     # Cantidad de topics asignados como -1
-    print("Cantidad de -1:", sum([t == -1 for t in pred_topics]))
+    #print("Cantidad de -1:", sum([t == -1 for t in pred_topics]))
 
     # -----------------------------------------
     # DEBUG 2 – VER LOS TOPICS QUE CREA EL MODELO
     # -----------------------------------------
     pred_topics, _ = modelo.transform(docs_list)
     
-    print("Len pred_topics:", len(pred_topics))
-    print("Muestras de topics:", pred_topics[:20])
+    #print("Len pred_topics:", len(pred_topics))
+    #print("Muestras de topics:", pred_topics[:20])
     
     # Contar cuántos -1 hay
     cant_menos1 = sum([t == -1 for t in pred_topics])
-    print("Cantidad de topics = -1:", cant_menos1)
+    #print("Cantidad de topics = -1:", cant_menos1)
     topics= tdocs_filtrado["topic"]
-    print("len(docs):", len(docs_list))
-    print("len(topics):", len(topics))
-    print("len(timestamps):", len(timestamps))
+    #print("len(docs):", len(docs_list))
+    #print("len(topics):", len(topics))
+    #print("len(timestamps):", len(timestamps))
 
     # Ahora SÍ tienen el mismo tamaño y coinciden con el modelo
     topics_over_time = modelo.topics_over_time(
@@ -222,4 +209,4 @@ def mostrar_procesados():
         topics_over_time,
         top_n_topics=10
     )
-    st.plotly_chart(fig4, use_container_width=True)
+    st.plotly_chart(fig4, width='stretch')  #use_container_width=True)

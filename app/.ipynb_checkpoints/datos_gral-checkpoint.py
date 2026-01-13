@@ -2,9 +2,15 @@ import streamlit as st
 import streamlit_shadcn_ui as ui
 import pandas as pd
 import plotly.express as px
+from pathlib import Path
+import os
 
 def cargar_datos():
-    df = pd.read_csv("datos\\datos_seleccionados.csv", encoding='latin1', sep=";")
+    base_path = Path(__file__).resolve().parent.parent
+    ruta = base_path / "datos" / "datos_seleccionados.csv"
+    print("RUTA: ")
+    print(ruta)
+    df = pd.read_csv(ruta, encoding="latin1", sep=";")
     return df
     
 def mostrar_datos_gral():
@@ -29,11 +35,11 @@ def mostrar_datos_gral():
     
     fig_fac = px.bar(df.groupby("facultad")["titulo"].count())
     fig_fac.update_layout(title="Distribución de TFG por Facultad")
-    st.plotly_chart(fig_fac, use_container_width=True)
+    st.plotly_chart(fig_fac, width='stretch') #use_container_width=True)
 
     fig_anio = px.bar(df.groupby("anio")["titulo"].count())
     fig_anio.update_layout(title="Distribución de TFG por Años")
-    st.plotly_chart(fig_anio, use_container_width=True)
+    st.plotly_chart(fig_anio, width='stretch')  # use_container_width=True)
 
 
     st.subheader("⭐ Ranking por Carreras")
@@ -49,7 +55,3 @@ def mostrar_datos_gral():
 
     st.dataframe(df_ranking, width='stretch')
     
-    # st.plotly_chart(
-    # ranking_carreras_chart(ranking),
-    # config={"responsive": True}  
-    # )

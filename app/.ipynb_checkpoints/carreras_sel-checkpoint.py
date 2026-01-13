@@ -1,5 +1,4 @@
 import streamlit as st
-#import os
 import pandas as pd
 import numpy as np
 import streamlit_shadcn_ui as ui
@@ -12,12 +11,9 @@ from wordcloud import WordCloud
 
 
 def cargar_datos():
-   # directorio_actual = os.getcwd()
     base_path = Path(__file__).resolve().parent.parent
     ruta = base_path / "datos" / "datos_carr_sel_prepro.csv"
     df = pd.read_csv(ruta, encoding="latin1", sep=";")
-    
-   # df = pd.read_csv("datos\\datos_carr_sel_prepro.csv", encoding='latin1', sep=";")
     return df
 
 def mostrar_carreras_sel():
@@ -65,7 +61,7 @@ def mostrar_carreras_sel():
     #-------------------------------------------
     fig_anio = px.bar(df_info_carr.groupby("anio")["titulo"].count(),
                       title="TFG por año en la carrera seleccionada")
-    st.plotly_chart(fig_anio, use_container_width=True)
+    st.plotly_chart(fig_anio, width='stretch')  # use_container_width=True)
 
     # Lista de TFG
     # ----------------
@@ -99,7 +95,8 @@ def mostrar_carreras_sel():
         max_words=100,
         collocations=False
     ).generate(texto)
-    st.image(nube.to_array(), use_container_width=False, width=500)
+    #st.image(nube.to_array(), use_container_width=False, width=500)
+    st.image(nube.to_array(), width='content')
 
     
 #     # Lista de TFG seleccionados

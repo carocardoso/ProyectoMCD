@@ -18,7 +18,7 @@ with st.sidebar:
     seccion=option_menu(
         menu_title="",
         options=["Información del Proyecto", "Estadísticas", "Carreras","Tópicos"],
-        icons=["info-circle", "funnel", "bar-chart", "graph-up-arrow"])   
+        icons=["info-circle", "bar-chart", "stack of books", "save instagram"])     #"bar-chart"  graph-up-arrow  funnel
 
 if seccion == "Información del Proyecto":
     mostrar_info_proyecto()
