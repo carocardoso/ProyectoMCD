@@ -15,7 +15,7 @@ def cargar_datos():
     #path_datos = os.path.join(path, "datos")
 
     base_path = Path(__file__).resolve().parent.parent
-    ruta = base_path / "datos" / "datos_seleccionados.csv"
+    #ruta = base_path / "datos" / "datos_seleccionados.csv"
 #    df = pd.read_csv(ruta, encoding="latin1", sep=";")
 
     # TOPIC_DOCS_CSV = os.path.join(path_datos, "topic_docs.csv")
@@ -42,16 +42,19 @@ def cargar_datos():
 # Cargar modelo BERTopic
 # -----------------------------------------------------------
 def cargar_modelo(carrera):
-    path = os.getcwd()
-    path_modelos = os.path.join(path, "modelos")
+   # path = os.getcwd()
+   # path_modelos = os.path.join(path, "modelos")
+    base_path = Path(__file__).resolve().parent.parent
+  #  ruta = base_path / "datos" / "datos_seleccionados.csv"
 
     carrera_modelo = "model_"+carrera.replace(" ", "_")
     #carrera_modelo = "model_Licenciatura_en_Psicología"   # Línea que vos usaste para pruebas
 
-    model_path = os.path.join(path_modelos, carrera_modelo)
+    model_path = base_path / "modelos" / carrera_modelo  #os.path.join(path_modelos, carrera_modelo)
     print("MODELO:", model_path)
 
-    zip_path = os.path.join(path_modelos, carrera_modelo + ".zip")
+    carrera_zip = carrera_modelo + ".zip" 
+    zip_path =  base_path / "modelos" / carrera_zip  # os.path.join(path_modelos, carrera_modelo + ".zip")
 
     
     # Verificar si la carpeta del modelo existe
