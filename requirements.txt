@@ -3,3 +3,4 @@ pandas
 streamlit_option_menu
 streamlit_shadcn_ui
 seaborn
+wordcloud
