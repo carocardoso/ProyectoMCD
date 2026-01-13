@@ -29,8 +29,7 @@ elif seccion == "Estadísticas":
     mostrar_datos_gral() 
     
 elif seccion == "Carreras":
-    #mostrar_carreras_sel()
-    st.write('carreras')
+    mostrar_carreras_sel()
     
 elif seccion == "Tópicos":
     #mostrar_procesados()
