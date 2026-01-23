@@ -17,17 +17,17 @@ st.set_page_config(
 with st.sidebar:
     seccion=option_menu(
         menu_title="",
-        options=["Información del Proyecto", "Estadísticas", "Carreras","Tópicos"],
+        options=["Información del Proyecto", "Visión General", "Análisis por Carreras","Exploración de Tópicos"],
         icons=["info-circle", "bar-chart", "stack of books", "save instagram"])     #"bar-chart"  graph-up-arrow  funnel
 
 if seccion == "Información del Proyecto":
     mostrar_info_proyecto()
 
-elif seccion == "Estadísticas":
+elif seccion == "Visión General":
     mostrar_datos_gral() 
     
-elif seccion == "Carreras":
+elif seccion == "Análisis por Carreras":
     mostrar_carreras_sel()
     
-elif seccion == "Tópicos":
+elif seccion == "Exploración de Tópicos":
     mostrar_procesados()   

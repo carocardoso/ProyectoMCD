@@ -17,7 +17,7 @@ def mostrar_datos_gral():
     df = cargar_datos()
     
     st.title("📊 Datos del proyecto")
-    st.markdown("""    Se presenta información general de los TFG recopilados    """)
+    st.markdown(""" Se presenta información general de los TFG recopilados del repositorio institucional   """)
     
     st.subheader("📌 Resumen General del Repositorio")
     
@@ -32,23 +32,46 @@ def mostrar_datos_gral():
         ui.metric_card(title="Años analizados", content= f"{df['anio'].min()} - {df['anio'].max()}", key="card4")
 
     st.subheader("⭐ Ranking por Facultades")
-    
-    fig_fac = px.bar(df.groupby("facultad")["titulo"].count())
-    fig_fac.update_layout(title="Distribución de TFG por Facultad")
-    st.plotly_chart(fig_fac, width='stretch') #use_container_width=True)
 
-    fig_anio = px.bar(df.groupby("anio")["titulo"].count())
-    fig_anio.update_layout(title="Distribución de TFG por Años")
-    st.plotly_chart(fig_anio, width='stretch')  # use_container_width=True)
+    # TFG por facultades
+    df_ranking_fac = df.groupby("facultad")["titulo"].count().reset_index()
+    df_ranking_fac.columns = ["Facultad", "Cantidad"]
+    fig_fac = px.bar(df_ranking_fac,
+        x="Facultad",
+        y="Cantidad",
+        title="Distribución de TFG por Facultad",
+    )
+    fig_fac.update_layout(
+        showlegend=False  # Esto elimina la leyenda lateral
+    )
+    st.plotly_chart(fig_fac, width='stretch') #use_container_width=True)
+    
+    #TFG por carreras
+    df_ranking_anio = df.groupby("anio")["titulo"].count().reset_index()
+    df_ranking_anio.columns = ["Año", "Cantidad"]
+    fig_anio = px.bar(df_ranking_anio,
+        x="Año",
+        y="Cantidad",
+        title="Distribución de TFG por Años",
+    )
+    fig_anio.update_layout(
+        showlegend=False  # Esto elimina la leyenda lateral
+    )
+    st.plotly_chart(fig_anio, width='stretch') #use_container_width=True)
+    
+    # fig_anio = px.bar(df.groupby("anio")["titulo"].count())
+    # fig_anio.update_layout(title="Distribución de TFG por Años")
+    # st.plotly_chart(fig_anio, width='stretch')  # use_container_width=True)
+
 
 
     st.subheader("⭐ Ranking por Carreras")
     
     df_ranking = df["carrera"].value_counts().reset_index()
-    df_ranking.columns = ["carrera", "cantidad"]
+    df_ranking.columns = ["Carrera", "Cantidad"]
     fig_carr = px.bar(df_ranking,
-        x="carrera",
-        y="cantidad",
+        x="Carrera",
+        y="Cantidad",
         title="Ranking de Carreras",
     )
     st.plotly_chart(fig_carr, config={"responsive": True} )
