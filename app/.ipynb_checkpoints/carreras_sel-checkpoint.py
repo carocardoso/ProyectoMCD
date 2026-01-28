@@ -32,20 +32,6 @@ def mostrar_carreras_sel():
     carrera = st.sidebar.selectbox("Carrera", df_carreras)
 
 
-    # # Selección de carrera
-    # # --------------------
-    # # agregar "Todas" a la selección de las carreras
-    # df_carreras = df["carrera"].unique()    
-    # df_carreras = np.insert(df["carrera"].unique(), 0, 'Todas')
-    
-    #st.sidebar.title("Opciones de análisis")
-    
-  #  df_info_carr = df
-    # cols = st.columns(2)
-    # with cols[0]:
-    #     carrera = st.selectbox("Seleccionar carrera:", df_carreras)
-    # # with cols[1]:
-
     df_info_carr = df
     if carrera!='Todas':        
         df_info_carr = df[df["carrera"] == carrera]
@@ -59,9 +45,27 @@ def mostrar_carreras_sel():
 
     # Gráfico de barras: cantidad de TFG por años
     #-------------------------------------------
-    fig_anio = px.bar(df_info_carr.groupby("anio")["titulo"].count(),
-                      title="TFG por año en la carrera seleccionada")
-    st.plotly_chart(fig_anio, width='stretch')  # use_container_width=True)
+    # fig_anio = px.bar(df_info_carr.groupby("anio")["titulo"].count(),
+    #                   title="TFG por año en la carrera seleccionada")
+    # st.plotly_chart(fig_anio, width='stretch')  # use_container_width=True)
+
+
+
+    df_ranking_carr = df_info_carr.groupby("anio")["titulo"].count().reset_index()
+    df_ranking_carr.columns = ["Año", "Cantidad"]
+    fig_anio = px.bar(df_ranking_carr,
+        x="Año",
+        y="Cantidad",
+        title="Distribución de TFG por Años",
+    )
+    fig_anio.update_layout(
+        showlegend=False  # Esto elimina la leyenda lateral
+    )
+    st.plotly_chart(fig_anio, width='stretch') #use_container_width=True)
+
+
+
+
 
     # Lista de TFG
     # ----------------
@@ -69,19 +73,19 @@ def mostrar_carreras_sel():
     #----------------------------
     
     df_lista = df_info_carr[['anio','titulo','descargas','vistas','url']].sort_values(by='anio', ascending=False)
+    df_lista.columns = ['Año','Título','Descargas','Vistas','URL']
     
     st.data_editor(
     df_lista,
         column_config={
-            "url": st.column_config.LinkColumn(
+            "URL": st.column_config.LinkColumn(
                 "Ver TFG", display_text="🔗",
             ),
         },
         hide_index=True,
     )
     
-    # df_lista = df_info_carr[['anio','titulo','resumen','descargas','vistas']]
-    # st.dataframe(df_lista, width='stretch')
+
     
     # Crear nube de palabras
     # -------------------------
@@ -89,8 +93,8 @@ def mostrar_carreras_sel():
     texto = " ".join(df_info_carr["texto_tok"])
 
     nube = WordCloud(
-        width=1200,
-        height=800,
+        width=500,
+        height=300,
         background_color='white',
         max_words=100,
         collocations=False
@@ -98,19 +102,5 @@ def mostrar_carreras_sel():
     #st.image(nube.to_array(), use_container_width=False, width=500)
     st.image(nube.to_array(), width='content')
 
-    
-#     # Lista de TFG seleccionados
-#     #----------------------------
-    
-#     df_lista = df_info_carr[['anio','titulo','descargas','vistas','url']]
-    
-#     st.data_editor(
-#     df_lista,
-#     column_config={
-#         "url": st.column_config.LinkColumn(
-#             "Ver TFG", display_text="🔗",
-#         ),
-#     },
-#     hide_index=True,
-# )
+
    

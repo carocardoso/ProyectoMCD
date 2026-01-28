@@ -89,10 +89,20 @@ def mostrar_procesados():
     # ------------------------------
     # FILTRO POR CARRERA
     # ------------------------------
-    tdocs_filtrado = topicdocs[ (topicdocs["carrera"] == carrera_sel) ] 
-    print(topicfreq.columns)
-    tfreq_filtrado = topicfreq[(topicfreq["carrera"] == carrera_sel) ] 
-
+    #tdocs_filtrado = topicdocs[ (topicdocs["carrera"] == carrera_sel & topicdocs["topic"]!=-1) ] 
+    tdocs_filtrado = topicdocs[
+            (topicdocs["carrera"] == carrera_sel) &
+            (topicdocs["topic"] != -1)
+        ]
+ 
+    #tfreq_filtrado = topicfreq[(topicfreq["carrera"] == carrera_sel & topicdocs["topic"]!=-1) ] 
+    tfreq_filtrado = topicfreq[
+            (topicfreq["carrera"] == carrera_sel) &
+            (topicfreq["topic"] != -1)
+        ]
+    #print(tfreq_filtrado.columns)
+   # tfreq_filtrado.columns = ['Tópico', 'Cantidad', 'Nombre', 'Etiqueta', 'Palabras Clave', 'Docs. representativos', 'Carrera']
+    
     docs_filtrado = docs[docs["carrera"] == carrera_sel]  
     # ------------------------------
     # Frecuencia de tópicos
@@ -104,10 +114,22 @@ def mostrar_procesados():
         x="topic",
         y="count",
         color="count",
-        title=f"Tópicos más frecuentes en {carrera_sel}"
+        title=f"Tópicos más frecuentes en {carrera_sel}",
+        labels={
+        "topic": "Tópico",
+        "count": "Cantidad"
+    }
     )
-    #st.plotly_chart(fig_bar, use_container_width=True)
+    fig_bar.update_layout(
+        showlegend=False,  # Esto elimina la leyenda lateral
+        xaxis=dict(
+        tickmode="linear",
+        dtick=1
+    ),
+    )
     st.plotly_chart(fig_bar, width='stretch')
+
+
     
     # ------------------------------
     # Cargar modelo
@@ -121,38 +143,51 @@ def mostrar_procesados():
 
     freq_lista = modelo.get_topic_info()
     freq_lista = freq_lista[["Topic", "Count", "Representation"]]
+    freq_lista.columns = ["Topico", "Cantidad", "Palabras clave"]
 
-    st.dataframe(
-        freq_lista,
-        column_config={
-            "Topic": st.column_config.TextColumn(
-            "Tópico"
-        ),
-            "Count": st.column_config.TextColumn(
-            "Cant. Docs.",
-            max_chars=15
-        ),
+    ##
+    freq_lista = freq_lista[
+              (freq_lista["Topico"] != -1)
+        ]
+
+    st.dataframe(freq_lista, 
+                 column_config={
+                 "Count":st.column_config.TextColumn("Cantidad", max_chars=5),
+                 "Topic":st.column_config.TextColumn("Tópico", max_chars=5)},
+                 hide_index=True)
+                 
+    # st.dataframe(
+    #     freq_lista,
+    #     column_config={
+    #         "Topic": st.column_config.TextColumn("Tópico", max_chars=10 ),
+    #         "Count": st.column_config.TextColumn("Cant. Docs.",  max_chars=10  ),
+    #        # "Representation": st.column_config.TextColumn("Palabras clave" )
             
-        },
-        hide_index=True,
-    )
+    #     },
+    #     hide_index=True,
+    # )
 
     all_topics = modelo.get_topics()
 
+    st.subheader("Top 5 - Palabras frecuentes en tópicos")
+    
     fig1 = modelo.visualize_barchart(
         top_n_topics=len(all_topics),
         n_words=5
     )
     st.plotly_chart(fig1, width='stretch') #
 
+   # st.subheader("Clusters")
+    
     if (len(all_topics) - 1) > 2:
-        st.write("Distribución entre tópicos")
+        #st.write("Distribución entre tópicos")
+        st.subheader("Distancias entre tópicos")
         fig2 = modelo.visualize_topics()
         st.plotly_chart(fig2, width='stretch')  #
 
  
     # ----------------------------------------------------
-    st.header("📈 Evolución de tópicos por año")
+    st.header("📈 Evolución de tópicos por años")
 
     docs_list = docs_filtrado["texto_limpio"].tolist()
     timestamps = docs_filtrado["anio"].tolist()

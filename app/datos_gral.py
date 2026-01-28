@@ -82,4 +82,8 @@ def mostrar_datos_gral():
   #  use_container_width=True)
     df_ranking = df_ranking.reset_index(drop=True)
     st.dataframe(df_ranking, use_container_width=True)
-    
+
+#     st.dataframe(
+#     df_ranking.style.hide(axis="index"),
+#     use_container_width=True
+# )

@@ -81,7 +81,7 @@ def prepara_modelo(nbre_dir_modelo, carrera):
     
     OUT_CSV = path_datos+"/topics_enriquecidos.csv"
 
-    print(OUT_CSV)  #muestra C:\Users\accar\Notebooks\ProyectoTesisMCD\datos/topics_enriquecidos.csv
+  #  print(OUT_CSV)  #muestra C:\Users\accar\Notebooks\ProyectoTesisMCD\datos/topics_enriquecidos.csv
     
     # # ---------------------------
     # # Carga del modelo BERTopic

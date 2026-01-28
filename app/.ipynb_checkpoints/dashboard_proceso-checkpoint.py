@@ -37,11 +37,11 @@ def cargar_modelo(carrera):
 
     carrera_modelo = "model_"+carrera.replace(" ", "_")
 
-    model_path = base_path / "modelos" / carrera_modelo  #os.path.join(path_modelos, carrera_modelo)
+    model_path = base_path / "modelos" / carrera_modelo  #
     print("MODELO:", model_path)
 
     carrera_zip = carrera_modelo + ".zip" 
-    zip_path =  base_path / "modelos" / carrera_zip  # os.path.join(path_modelos, carrera_modelo + ".zip")
+    zip_path =  base_path / "modelos" / carrera_zip  # 
     
     # Verificar si la carpeta del modelo existe
     if not os.path.exists(model_path):
@@ -89,12 +89,21 @@ def mostrar_procesados():
     # ------------------------------
     # FILTRO POR CARRERA
     # ------------------------------
-    tdocs_filtrado = topicdocs[ (topicdocs["carrera"] == carrera_sel) ] #&   (topicdocs["topic"] != -1)]
-    print(topicfreq.columns)
-    tfreq_filtrado = topicfreq[(topicfreq["carrera"] == carrera_sel) ] #& (topicfreq["topic"] != -1) ]
-
-    docs_filtrado = docs[docs["carrera"] == carrera_sel]   # 🔥 Este es el correcto
-
+    #tdocs_filtrado = topicdocs[ (topicdocs["carrera"] == carrera_sel & topicdocs["topic"]!=-1) ] 
+    tdocs_filtrado = topicdocs[
+            (topicdocs["carrera"] == carrera_sel) &
+            (topicdocs["topic"] != -1)
+        ]
+ 
+    #tfreq_filtrado = topicfreq[(topicfreq["carrera"] == carrera_sel & topicdocs["topic"]!=-1) ] 
+    tfreq_filtrado = topicfreq[
+            (topicfreq["carrera"] == carrera_sel) &
+            (topicfreq["topic"] != -1)
+        ]
+    #print(tfreq_filtrado.columns)
+   # tfreq_filtrado.columns = ['Tópico', 'Cantidad', 'Nombre', 'Etiqueta', 'Palabras Clave', 'Docs. representativos', 'Carrera']
+    
+    docs_filtrado = docs[docs["carrera"] == carrera_sel]  
     # ------------------------------
     # Frecuencia de tópicos
     # ------------------------------
@@ -105,10 +114,22 @@ def mostrar_procesados():
         x="topic",
         y="count",
         color="count",
-        title=f"Tópicos más frecuentes en {carrera_sel}"
+        title=f"Tópicos más frecuentes en {carrera_sel}",
+        labels={
+        "topic": "Tópico",
+        "count": "Cantidad"
+    }
     )
-    #st.plotly_chart(fig_bar, use_container_width=True)
+    fig_bar.update_layout(
+        showlegend=False,  # Esto elimina la leyenda lateral
+        xaxis=dict(
+        tickmode="linear",
+        dtick=1
+    ),
+    )
     st.plotly_chart(fig_bar, width='stretch')
+
+
     
     # ------------------------------
     # Cargar modelo
@@ -122,40 +143,51 @@ def mostrar_procesados():
 
     freq_lista = modelo.get_topic_info()
     freq_lista = freq_lista[["Topic", "Count", "Representation"]]
+    freq_lista.columns = ["Topico", "Cantidad", "Palabras clave"]
 
-    st.dataframe(
-        freq_lista,
-        column_config={
-            "Topic": st.column_config.TextColumn(
-            "Tópico"
-        ),
-            "Count": st.column_config.TextColumn(
-            "Cant. Docs.",
-            max_chars=15
-        ),
+    ##
+    freq_lista = freq_lista[
+              (freq_lista["Topico"] != -1)
+        ]
+
+    st.dataframe(freq_lista, 
+                 column_config={
+                 "Count":st.column_config.TextColumn("Cantidad", max_chars=5),
+                 "Topic":st.column_config.TextColumn("Tópico", max_chars=5)},
+                 hide_index=True)
+                 
+    # st.dataframe(
+    #     freq_lista,
+    #     column_config={
+    #         "Topic": st.column_config.TextColumn("Tópico", max_chars=10 ),
+    #         "Count": st.column_config.TextColumn("Cant. Docs.",  max_chars=10  ),
+    #        # "Representation": st.column_config.TextColumn("Palabras clave" )
             
-        },
-        hide_index=True,
-    )
+    #     },
+    #     hide_index=True,
+    # )
 
     all_topics = modelo.get_topics()
 
+    st.subheader("Top 5 - Palabras frecuentes en tópicos")
+    
     fig1 = modelo.visualize_barchart(
         top_n_topics=len(all_topics),
         n_words=5
     )
-    st.plotly_chart(fig1, width='stretch') # use_container_width=True)
+    st.plotly_chart(fig1, width='stretch') #
 
+   # st.subheader("Clusters")
+    
     if (len(all_topics) - 1) > 2:
-        st.write("Distribución entre tópicos")
+        #st.write("Distribución entre tópicos")
+        st.subheader("Distancias entre tópicos")
         fig2 = modelo.visualize_topics()
-        st.plotly_chart(fig2, width='stretch')  #use_container_width=True)
+        st.plotly_chart(fig2, width='stretch')  #
 
+ 
     # ----------------------------------------------------
-    # 🔥 Evolución de tópicos en el tiempo
-    #   (CORREGIDO — usa df_docs filtrado, no topicdocs)
-    # ----------------------------------------------------
-    st.header("📈 Evolución de tópicos por año")
+    st.header("📈 Evolución de tópicos por años")
 
     docs_list = docs_filtrado["texto_limpio"].tolist()
     timestamps = docs_filtrado["anio"].tolist()
@@ -163,8 +195,7 @@ def mostrar_procesados():
     print("Docs:", len(docs_list))
     print("Timestamps:", len(timestamps))
 
-    # -----------------------------------------
-    # DEBUG PROFUNDO – NECESARIO
+
     # -----------------------------------------
     print("\n===== DEBUG TOPICS_OVER_TIME =====")
     print("docs_filtrado.shape:", docs_filtrado.shape)
@@ -172,31 +203,19 @@ def mostrar_procesados():
     docs_list = docs_filtrado["texto_limpio"].tolist()
     timestamps = docs_filtrado["anio"].tolist()
     
-    #print("Len docs_list:", len(docs_list))
-    #print("Len timestamps:", len(timestamps))
     
     # Los topics EXACTOS que BERTopic asignó a estos documentos
     pred_topics, _ = modelo.transform(docs_list)
-    #print("Len pred_topics:", len(pred_topics))
     
-    # Cantidad de topics asignados como -1
-    #print("Cantidad de -1:", sum([t == -1 for t in pred_topics]))
-
-    # -----------------------------------------
     # DEBUG 2 – VER LOS TOPICS QUE CREA EL MODELO
     # -----------------------------------------
     pred_topics, _ = modelo.transform(docs_list)
     
-    #print("Len pred_topics:", len(pred_topics))
-    #print("Muestras de topics:", pred_topics[:20])
     
     # Contar cuántos -1 hay
     cant_menos1 = sum([t == -1 for t in pred_topics])
     #print("Cantidad de topics = -1:", cant_menos1)
     topics= tdocs_filtrado["topic"]
-    #print("len(docs):", len(docs_list))
-    #print("len(topics):", len(topics))
-    #print("len(timestamps):", len(timestamps))
 
     # Ahora SÍ tienen el mismo tamaño y coinciden con el modelo
     topics_over_time = modelo.topics_over_time(
