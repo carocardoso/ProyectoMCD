@@ -37,11 +37,11 @@ def cargar_modelo(carrera):
 
     carrera_modelo = "model_"+carrera.replace(" ", "_")
 
-    model_path = base_path / "modelos" / carrera_modelo  #os.path.join(path_modelos, carrera_modelo)
+    model_path = base_path / "modelos" / carrera_modelo  #
     print("MODELO:", model_path)
 
     carrera_zip = carrera_modelo + ".zip" 
-    zip_path =  base_path / "modelos" / carrera_zip  # os.path.join(path_modelos, carrera_modelo + ".zip")
+    zip_path =  base_path / "modelos" / carrera_zip  # 
     
     # Verificar si la carpeta del modelo existe
     if not os.path.exists(model_path):
@@ -89,12 +89,11 @@ def mostrar_procesados():
     # ------------------------------
     # FILTRO POR CARRERA
     # ------------------------------
-    tdocs_filtrado = topicdocs[ (topicdocs["carrera"] == carrera_sel) ] #&   (topicdocs["topic"] != -1)]
+    tdocs_filtrado = topicdocs[ (topicdocs["carrera"] == carrera_sel) ] 
     print(topicfreq.columns)
-    tfreq_filtrado = topicfreq[(topicfreq["carrera"] == carrera_sel) ] #& (topicfreq["topic"] != -1) ]
+    tfreq_filtrado = topicfreq[(topicfreq["carrera"] == carrera_sel) ] 
 
-    docs_filtrado = docs[docs["carrera"] == carrera_sel]   # 🔥 Este es el correcto
-
+    docs_filtrado = docs[docs["carrera"] == carrera_sel]  
     # ------------------------------
     # Frecuencia de tópicos
     # ------------------------------
@@ -144,16 +143,14 @@ def mostrar_procesados():
         top_n_topics=len(all_topics),
         n_words=5
     )
-    st.plotly_chart(fig1, width='stretch') # use_container_width=True)
+    st.plotly_chart(fig1, width='stretch') #
 
     if (len(all_topics) - 1) > 2:
         st.write("Distribución entre tópicos")
         fig2 = modelo.visualize_topics()
-        st.plotly_chart(fig2, width='stretch')  #use_container_width=True)
+        st.plotly_chart(fig2, width='stretch')  #
 
-    # ----------------------------------------------------
-    # 🔥 Evolución de tópicos en el tiempo
-    #   (CORREGIDO — usa df_docs filtrado, no topicdocs)
+ 
     # ----------------------------------------------------
     st.header("📈 Evolución de tópicos por año")
 
@@ -163,8 +160,7 @@ def mostrar_procesados():
     print("Docs:", len(docs_list))
     print("Timestamps:", len(timestamps))
 
-    # -----------------------------------------
-    # DEBUG PROFUNDO – NECESARIO
+
     # -----------------------------------------
     print("\n===== DEBUG TOPICS_OVER_TIME =====")
     print("docs_filtrado.shape:", docs_filtrado.shape)
@@ -172,31 +168,19 @@ def mostrar_procesados():
     docs_list = docs_filtrado["texto_limpio"].tolist()
     timestamps = docs_filtrado["anio"].tolist()
     
-    #print("Len docs_list:", len(docs_list))
-    #print("Len timestamps:", len(timestamps))
     
     # Los topics EXACTOS que BERTopic asignó a estos documentos
     pred_topics, _ = modelo.transform(docs_list)
-    #print("Len pred_topics:", len(pred_topics))
     
-    # Cantidad de topics asignados como -1
-    #print("Cantidad de -1:", sum([t == -1 for t in pred_topics]))
-
-    # -----------------------------------------
     # DEBUG 2 – VER LOS TOPICS QUE CREA EL MODELO
     # -----------------------------------------
     pred_topics, _ = modelo.transform(docs_list)
     
-    #print("Len pred_topics:", len(pred_topics))
-    #print("Muestras de topics:", pred_topics[:20])
     
     # Contar cuántos -1 hay
     cant_menos1 = sum([t == -1 for t in pred_topics])
     #print("Cantidad de topics = -1:", cant_menos1)
     topics= tdocs_filtrado["topic"]
-    #print("len(docs):", len(docs_list))
-    #print("len(topics):", len(topics))
-    #print("len(timestamps):", len(timestamps))
 
     # Ahora SÍ tienen el mismo tamaño y coinciden con el modelo
     topics_over_time = modelo.topics_over_time(

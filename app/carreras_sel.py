@@ -32,20 +32,6 @@ def mostrar_carreras_sel():
     carrera = st.sidebar.selectbox("Carrera", df_carreras)
 
 
-    # # Selección de carrera
-    # # --------------------
-    # # agregar "Todas" a la selección de las carreras
-    # df_carreras = df["carrera"].unique()    
-    # df_carreras = np.insert(df["carrera"].unique(), 0, 'Todas')
-    
-    #st.sidebar.title("Opciones de análisis")
-    
-  #  df_info_carr = df
-    # cols = st.columns(2)
-    # with cols[0]:
-    #     carrera = st.selectbox("Seleccionar carrera:", df_carreras)
-    # # with cols[1]:
-
     df_info_carr = df
     if carrera!='Todas':        
         df_info_carr = df[df["carrera"] == carrera]
@@ -80,8 +66,7 @@ def mostrar_carreras_sel():
         hide_index=True,
     )
     
-    # df_lista = df_info_carr[['anio','titulo','resumen','descargas','vistas']]
-    # st.dataframe(df_lista, width='stretch')
+
     
     # Crear nube de palabras
     # -------------------------
@@ -98,19 +83,5 @@ def mostrar_carreras_sel():
     #st.image(nube.to_array(), use_container_width=False, width=500)
     st.image(nube.to_array(), width='content')
 
-    
-#     # Lista de TFG seleccionados
-#     #----------------------------
-    
-#     df_lista = df_info_carr[['anio','titulo','descargas','vistas','url']]
-    
-#     st.data_editor(
-#     df_lista,
-#     column_config={
-#         "url": st.column_config.LinkColumn(
-#             "Ver TFG", display_text="🔗",
-#         ),
-#     },
-#     hide_index=True,
-# )
+
    
