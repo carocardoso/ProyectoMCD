@@ -68,6 +68,7 @@ def mostrar_datos_gral():
     st.subheader("⭐ Ranking por Carreras")
     
     df_ranking = df["carrera"].value_counts().reset_index()
+    
     df_ranking.columns = ["Carrera", "Cantidad"]
     fig_carr = px.bar(df_ranking,
         x="Carrera",
@@ -76,5 +77,9 @@ def mostrar_datos_gral():
     )
     st.plotly_chart(fig_carr, config={"responsive": True} )
 
-    st.dataframe(df_ranking, width='stretch')
+    #df.style.hide_index()    
+  #  st.dataframe(df_ranking.style.hide(axis="index"),
+  #  use_container_width=True)
+    df_ranking = df_ranking.reset_index(drop=True)
+    st.dataframe(df_ranking, use_container_width=True)
     
